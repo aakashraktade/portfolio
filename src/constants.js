@@ -233,7 +233,7 @@ export const SkillsInfo = [
       image: githubdetLogo,
       tags: ["HTML", "CSS", "JavaScript", "React JS", "API"],
       github: "https://github.com/aakashraktade/React-Projects/tree/main/github-profile-search",
-      webapp: "https://githubprofiledetective.netlify.app/",
+      webapp: "https://ak-github-profile-detectiv.netlify.app",
     },
     {
       id: 1,
@@ -243,7 +243,7 @@ export const SkillsInfo = [
       image: imagesearchLogo,
       tags: ["React JS", "API", "Search Feature", "CSS", "JavaScript"],
       github: "https://github.com/codingmastr/Image-Search-App",
-      webapp: "https://imagsearch.netlify.app/",
+      webapp: "https://ar-image-sercher.netlify.app/",
     },
     {
       id: 2,
@@ -253,7 +253,7 @@ export const SkillsInfo = [
       image: weather,
       tags: ["React","Tailwind","Search Feature", "API"],
       github: "https://github.com/aakashraktade/React-Projects/tree/main/weather",
-      webapp: "https://githubprofiledetective.netlify.app/",
+      webapp: "https://aakash-weather-app-react.netlify.app",
     },
     {
       id: 3,
@@ -283,7 +283,7 @@ export const SkillsInfo = [
       image: diceGame,
       tags: ["HTML","CSS","JavaScript","React"],
       github: "https://github.com/aakashraktade/React-Projects/tree/main/dice-game",
-      webapp: "https://githubprofiledetective.netlify.app/",
+      webapp: "https://aakash-dice-game.netlify.app",
     },
     {
       id: 6,
