@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaGithub } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FiX } from "react-icons/fi";
 import { IoMenu } from "react-icons/io5";
 
@@ -20,6 +19,12 @@ const Navbar = () => {
   const handleMenuItemClick = (sectionId) => {
     setActiveSection(sectionId);
     setIsOpen(false);
+
+    // Scroll to the section
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   const menuItems = [
@@ -34,12 +39,12 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition duration-300 px-[7vw] md:px-[7vw] lg:px-[20vw] ${
         isScrolled
-          ? "bg-[#050414] bg-opacity-50 backdrop-blur-md shadow-md"
+          ? "bg-[#050414]/40 backdrop-blur-lg border-b border-white/10 shadow-lg"
           : "bg-transparent"
       }`}
     >
       <div className="text-white py-5 flex justify-between items-center">
-        {/*LOGO*/}
+        {/* LOGO */}
         <div className="text-lg font-semibold cursor-pointer">
           <span className="text-[#8245ec]">&lt;</span>
           <span className="text-white">Aakash</span>
@@ -48,7 +53,7 @@ const Navbar = () => {
           <span className="text-[#8245ec]">&gt;</span>
         </div>
 
-        {/*Deskyop Menu*/}
+        {/* Desktop Menu */}
         <ul className="md:flex space-x-8 text-gray-300 hidden">
           {menuItems.map((item) => (
             <li
@@ -64,7 +69,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/*Social Icons*/}
+        {/* Social Icons */}
         <div className="hidden md:flex space-x-4">
           <a
             href="https://github.com/aakashraktade"
@@ -84,7 +89,7 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/*Mobile Menu Button*/}
+        {/* Mobile Menu Button */}
         <div className="md:hidden">
           {isOpen ? (
             <FiX
@@ -100,9 +105,14 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/*Mobile Items*/}
+      {/* Mobile Items */}
       {isOpen && (
-        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-4/5 bg-[#656381] bg-opacity-50 backdrop-blur-md z-50 rounded-lg shadow-lg">
+        <div
+          className="absolute top-16 left-1/2 transform -translate-x-1/2 w-4/5 
+                bg-[#656381]/30 backdrop-blur-xl 
+                border border-white/20 
+                rounded-lg shadow-lg z-50"
+        >
           <ul className="flex flex-col items-center space-y-4 py-4 text-gray-300">
             {menuItems.map((item) => (
               <li

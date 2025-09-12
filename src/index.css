@@ -9,4 +9,47 @@
   }
 
   --animate-blob: blob 10s infinite;
+
+  --background-image-skills-gradient: 
+    linear-gradient(
+      38.73deg, 
+      rgba(204, 0, 187, 0.15) 0%, 
+      rgba(201, 32, 184, 0) 50%
+    ),
+    linear-gradient(
+      141.27deg, 
+      rgba(0, 70, 209, 0) 50%, 
+      rgba(0, 70, 209, 0.15) 100%
+    );
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------------- THEME SUPPORT ---------------- */
+@layer base {
+  body {
+    @apply bg-white text-black transition-colors duration-500;
+  }
+
+  .dark body {
+    @apply bg-[#0b0b0f] text-white transition-colors duration-500;
+  }
+}
+
+@layer utilities {
+  .clip-path-custom {
+    clip-path: polygon(0 0, 100% 0, 100% 98%, 75% 95%, 0 100%);
+  }
+  .clip-path-custom-2 {
+    clip-path: polygon(0 0, 100% 0, 100% 98%, 25% 95%, 0 100%);
+  }
+  .clip-path-custom-3 {
+    clip-path: polygon(0 0, 100% 0, 100% 98%, 75% 96%, 0 100%);
+  }
 }

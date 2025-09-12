@@ -7,12 +7,11 @@ const About = () => {
   return (
     <section
       id="about"
-      className="pt-4 px-[7vw] md:px-[7vw] lg:px-[20vw] font-sans"
+      className="pt-20 px-[7vw] md:px-[7vw] lg:px-[20vw] font-sans"
     >
-      <div className="flex flex-col-reverse md:flex-row items-stretch gap-x-16">
+      <div className="flex flex-col-reverse md:flex-row items-stretch gap-12 md:gap-32">
         {/* Left side */}
-        <div className="md:w-1/2 text-center md:text-left mt-8 md:mt-0 flex flex-col justify-center">
-        
+        <div className="flex-1 max-w-md text-center md:text-left mt-8 md:mt-0 flex flex-col justify-center">
           {/* Greeting */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-2 leading-tight">
             Hi, I am
@@ -29,8 +28,6 @@ const About = () => {
             <TypeAnimation
               sequence={[
                 "Full-Stack Developer.",
-                1000,
-                "App Developer.",
                 1000,
                 "React Developer.",
                 1000,
@@ -52,7 +49,7 @@ const About = () => {
             technical skills include proficiency in Java, C, C++, JavaScript,
             and Flutter. I am committed to applying my knowledge and passion for
             engineering to solve real-world problems while collaborating in
-            dynamic team environments
+            dynamic team environments.
           </p>
 
           {/* Resume Button */}
@@ -71,9 +68,9 @@ const About = () => {
         </div>
 
         {/* Right side */}
-        <div className="md:w-1/2 flex justify-center md:justify-end items-center">
+        <div className="flex-1 max-w-lg flex justify-center md:justify-end items-center mt-8 md:mt-0">
           <Tilt
-            className="h-full max-w-[30rem] border-4 border-purple-700 rounded-full"
+            className="w-full h-full border-4 border-purple-700 rounded-full "
             tiltMaxAngleX={20}
             tiltMaxAngleY={20}
             perspective={1000}
@@ -84,7 +81,7 @@ const About = () => {
             <img
               src={profileImage}
               alt="Aakash Raktade"
-              className="w-full h-full object-cover drop-shadow-[0_10px_20px_rgba(130,69,236,0.5)] rounded-full"
+              className="w-full h-full object-cover rounded-full drop-shadow-[0_10px_20px_rgba(130,69,236,0.5)]"
             />
           </Tilt>
         </div>
