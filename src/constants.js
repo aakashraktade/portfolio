@@ -253,7 +253,7 @@ export const SkillsInfo = [
       image: weather,
       tags: ["React","Tailwind","Search Feature", "API"],
       github: "https://github.com/aakashraktade/React-Projects/tree/main/weather",
-      webapp: "https://aakash-weather-app-react.netlify.app",
+      webapp: "https://aakash-weather-app-react.netlify.app/",
     },
     {
       id: 3,
@@ -263,7 +263,7 @@ export const SkillsInfo = [
       image: news,
       tags: ["HTML", "CSS","Search Feature", "JavaScript", "API"],
       github: "https://github.com/aakashraktade/News-website",
-      webapp: "https://githubprofiledetective.netlify.app/",
+      webapp: "https://github.com/aakashraktade/News-website",
     },
     {
       id: 4,
@@ -273,7 +273,7 @@ export const SkillsInfo = [
       image: dashboard,
       tags: ["HTML","CSS","JavaScript","React","recharts", "API"],
       github: "https://github.com/aakashraktade/dashboard_with_graphs",
-      webapp: "https://githubprofiledetective.netlify.app/",
+      webapp: "https://ar-dashboard-graphs.netlify.app/",
     },
     {
       id: 5,
@@ -293,6 +293,8 @@ export const SkillsInfo = [
       image: rakshakUser,
       tags: ["Flutter", "Dart", "SupaBase", "API"],
       github: "https://github.com/aakashraktade/Rakshak_User",
+      webapp: "https://github.com/aakashraktade/Rakshak_User",
+
       
     },
     {
@@ -303,6 +305,8 @@ export const SkillsInfo = [
       image: rakshakAdmin,
       tags: ["Flutter", "Dart", "SupaBase", "API"],
       github: "https://github.com/aakashraktade/Rakshak_Admin",
+      webapp: "https://github.com/aakashraktade/Rakshak_Admin",
+
       
     },
     {
@@ -312,7 +316,9 @@ export const SkillsInfo = [
         "Built a Foody Zone application in React with a search bar and category filters (Dinner, Lunch, etc.), enabling users to easily search and sort food items. Implemented dynamic rendering for smooth and interactive user experience.",
       image: foody,
       tags: ["Flutter", "Dart", "SupaBase", "API"],
-      github: "https://github.com/aakashraktade/Rakshak_Admin",
+      github: "https://github.com/aakashraktade/React-Projects/tree/main/foody-zone",
+      webapp: "https://github.com/aakashraktade/React-Projects/tree/main/foody-zone",
+
       
     },
     

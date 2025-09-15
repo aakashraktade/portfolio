@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import { projects } from "../../constants";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  show: { 
+    transition: { staggerChildren: 0.2 }
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+};
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+};
 
 const Work = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const handleOpenModal = (project) => {
-    setSelectedProject(project);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedProject(null);
-  };
+  const handleOpenModal = (project) => setSelectedProject(project);
+  const handleCloseModal = () => setSelectedProject(null);
 
   return (
     <section
@@ -19,21 +32,48 @@ const Work = () => {
     >
       {/* Section Title */}
       <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-white">PROJECTS</h2>
-        <div className="w-32 h-1 bg-purple-500 mx-auto mt-4"></div>
-        <p className="text-gray-400 mt-4 text-lg font-semibold">
+        <motion.h2
+          className="text-4xl font-bold text-white"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+        >
+          PROJECTS
+        </motion.h2>
+        <motion.div
+          className="w-32 h-1 bg-purple-500 mx-auto mt-4"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+        ></motion.div>
+        <motion.p
+          className="text-gray-400 mt-4 text-lg font-semibold"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
           A showcase of the projects I have worked on, highlighting my skills
           and experience in various technologies
-        </p>
+        </motion.p>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        className="grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {projects.map((project) => (
-          <div
+          <motion.div
             key={project.id}
             onClick={() => handleOpenModal(project)}
             className="border border-white bg-gray-900 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden cursor-pointer hover:shadow-purple-500/50 hover:-translate-y-2 transition-transform duration-300"
+            variants={cardVariants}
           >
             <div className="p-4">
               <img
@@ -60,73 +100,75 @@ const Work = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      
       {/* Modal Container */}
-{selectedProject && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4">
-    <div className="bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl overflow-hidden relative">
-      
-      {/* Close Button */}
-      <div className="absolute top-4 right-4 z-50">
-        <button
-          onClick={handleCloseModal}
-          className="text-white text-3xl font-bold hover:text-purple-500"
+      {selectedProject && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+          variants={modalVariants}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
         >
-          &times;
-        </button>
-      </div>
+          <div className="bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl overflow-hidden relative">
+            {/* Close Button */}
+            <div className="absolute top-4 right-4 z-50">
+              <button
+                onClick={handleCloseModal}
+                className="text-white text-3xl font-bold hover:text-purple-500"
+              >
+                &times;
+              </button>
+            </div>
 
-      {/* Modal Content */}
-      <div className="flex flex-col items-center p-6 lg:p-8">
-        <img
-          src={selectedProject.image}
-          alt={selectedProject.title}
-          className="w-full max-h-[400px] object-contain rounded-xl shadow-2xl mb-6"
-        />
-        <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4 text-center">
-          {selectedProject.title}
-        </h3>
-        <p className="text-gray-400 mb-6 text-center lg:text-base text-sm">
-          {selectedProject.description}
-        </p>
-        <div className="flex flex-wrap justify-center gap-2 mb-6">
-          {selectedProject.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="bg-[#251f38] text-xs font-semibold text-purple-500 rounded-full px-2 py-1"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        <div className="flex flex-col sm:flex-row gap-4 w-full">
-          <a
-            href={selectedProject.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 bg-gray-800 hover:bg-purple-800 text-gray-400 px-4 py-2 rounded-xl text-center font-semibold"
-          >
-            View Code
-          </a>
-          <a
-            href={selectedProject.webapp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 bg-purple-600 hover:bg-purple-800 text-white px-4 py-2 rounded-xl text-center font-semibold"
-          >
-            View Live
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
-
+            {/* Modal Content */}
+            <div className="flex flex-col items-center p-6 lg:p-8">
+              <img
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                className="w-full max-h-[400px] object-contain rounded-xl shadow-2xl mb-6"
+              />
+              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4 text-center">
+                {selectedProject.title}
+              </h3>
+              <p className="text-gray-400 mb-6 text-center lg:text-base text-sm">
+                {selectedProject.description}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 mb-6">
+                {selectedProject.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-[#251f38] text-xs font-semibold text-purple-500 rounded-full px-2 py-1"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
+                <a
+                  href={selectedProject.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-gray-800 hover:bg-purple-800 text-gray-400 px-4 py-2 rounded-xl text-center font-semibold"
+                >
+                  View Code
+                </a>
+                <a
+                  href={selectedProject.webapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-purple-600 hover:bg-purple-800 text-white px-4 py-2 rounded-xl text-center font-semibold"
+                >
+                  View Live
+                </a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </section>
   );
 };
