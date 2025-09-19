@@ -26,7 +26,7 @@ const Experiance = () => {
 
   return (
     <Box
-      id="experiance"
+      id="experience"
       sx={{
         py: 10,
         px: { xs: 3, sm: 6, md: 10, lg: 16 },
