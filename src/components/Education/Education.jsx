@@ -1,6 +1,13 @@
 import React from "react";
 import { education } from "../../constants";
 import { motion } from "framer-motion";
+import {
+  Box,
+  Typography,
+  Card,
+  Avatar,
+  useTheme,
+} from "@mui/material";
 
 const cardVariantsLeft = {
   hidden: { opacity: 0, x: -100 },
@@ -13,101 +20,181 @@ const cardVariantsRight = {
 };
 
 const Education = () => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   return (
-    <section
+    <Box
       id="education"
-      className="py-24 pb-24 px-[12vw] md:px-[7vw] lg:px-[16vw] font-sans bg-skills-gradient clip-path-custom-3"
+      sx={{
+        py: 10,
+        px: { xs: 3, sm: 6, md: 10, lg: 16 },
+        position: "relative",
+      }}
     >
       {/* Section Title */}
-      <div className="text-center mb-16">
-        <motion.h2
-          className="text-4xl font-bold text-white"
+      <Box textAlign="center" mb={10}>
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7 }}
         >
-          EDUCATION
-        </motion.h2>
+          <Typography variant="h4" fontWeight="bold" color="text.primary">
+            Education
+          </Typography>
+        </motion.div>
         <motion.div
-          className="w-32 h-1 bg-purple-500 mx-auto mt-4"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7 }}
-        ></motion.div>
-        <motion.p
-          className="text-gray-400 mt-4 text-lg font-semibold"
+        >
+          <Box
+            sx={{
+              width: 120,
+              height: 4,
+              bgcolor: "#8245ec",
+              mx: "auto",
+              mt: 2,
+              borderRadius: 2,
+            }}
+          />
+        </motion.div>
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          My Education has been a journey of learning and development. Here are
-          the details of my academic background.
-        </motion.p>
-      </div>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            fontWeight={600}
+            mt={2}
+          >
+            My Education has been a journey of learning and development. Here are
+            the details of my academic background.
+          </Typography>
+        </motion.div>
+      </Box>
 
-      {/* Education Entries */}
-      <div className="relative">
-        {/* Vertical Line */}
-        <div className="absolute sm:left-1/2 left-0 transform -translate-x-1/2 sm:-translate-x-0 w-1 bg-white h-full"></div>
+      {/* Education Container */}
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+          mb: 10,
+        }}
+      >
+        {/* Vertical Timeline Line */}
+        <Box
+          sx={{
+            position: "absolute",
+            left: { xs: 30, sm: "50%" },
+            transform: { xs: "none", sm: "translateX(-50%)" },
+            width: "3px",
+            bgcolor: "white",
+            top: 0,
+            bottom: 0,
+            zIndex: 0,
+          }}
+        />
 
         {education.map((edu, index) => (
           <motion.div
             key={edu.id}
-            className={`flex flex-col sm:flex-row items-center mb-16`}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
             variants={index % 2 === 0 ? cardVariantsLeft : cardVariantsRight}
           >
-            {/* Timeline Circle */}
-            <div className="absolute sm:left-1/2 left-0 transform -translate-x-1/2 bg-gray-400 border-4 border-[#8245ec] w-12 h-12 sm:w-16 sm:h-16 rounded-full flex justify-center items-center z-10">
-              <img
+            <Box
+              display="flex"
+              flexDirection={{ xs: "column", sm: "row" }}
+              alignItems="center"
+              sx={{ position: "relative", zIndex: 1 }}
+            >
+              {/* Timeline Circle */}
+              <Avatar
                 src={edu.img}
                 alt={edu.school}
-                className="w-full h-full object-cover rounded-full"
+                sx={{
+                  width: { xs: 50, sm: 70 },
+                  height: { xs: 50, sm: 70 },
+                  border: "4px solid #8245ec",
+                  position: "absolute",
+                  left: { xs: 30, sm: "50%" },
+                  transform: { xs: "none", sm: "translateX(-50%)" },
+                  zIndex: 10,
+                }}
               />
-            </div>
 
-            {/* Education Card */}
-            <div
-              className={`w-full sm:max-w-md p-4 sm:p-8 rounded-2xl border border-white bg-gray-900 backdrop-blur-md shadow-[0_0_20px_1px_rgba(130,96,236,0.3)] ${
-                index % 2 === 0 ? "sm:ml-auto sm:pl-8" : "sm:mr-auto sm:pr-8"
-              }`}
-            >
-              <div className="flex items-center space-x-6">
-                <div
-                  className={`w-16 h-16 bg-white rounded-md overflow-hidden ${
-                    index % 2 === 0 ? "mr-auto" : "ml-auto"
-                  }`}
-                >
-                  <img
+              {/* Education Card */}
+              <Card
+                sx={{
+                  maxWidth: 500,
+                  ml: index % 2 === 0 ? { sm: "auto" } : 0,
+                  mr: index % 2 !== 0 ? { sm: "auto" } : 0,
+                  mt: { xs: 6, sm: 0 },
+                  p: 3,
+                  borderRadius: 3,
+                  border: isDark ? "1px solid #fff" : "1px solid #ddd",
+                  background: isDark
+                    ? "#1e1e1e"
+                    : "linear-gradient(135deg, #ffffff, #e0d4ff, #f3e7ff)",
+                  boxShadow: isDark
+                    ? "0 0 20px 1px rgba(130,96,236,0.3)"
+                    : "0 0 15px 1px rgba(130,69,236,0.2)",
+                  transition: "0.3s",
+                  "&:hover": {
+                    transform: "scale(1.02)",
+                    boxShadow: 6,
+                  },
+                }}
+              >
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Avatar
                     src={edu.img}
                     alt={edu.school}
-                    className="w-full h-full object-cover"
+                    variant="rounded"
+                    sx={{
+                      width: 64,
+                      height: 64,
+                      bgcolor: "#fff",
+                    }}
                   />
-                </div>
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold text-white">
+                  <Box>
+                    <Typography
+                      variant="h6"
+                      fontWeight="600"
+                      color="text.primary"
+                    >
                       {edu.degree}
-                    </h3>
-                    <h4 className="text-md sm:text-sm text-gray-300 ">
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
                       {edu.school}
-                    </h4>
-                  </div>
-                  <p className="text-sm text-gray-500 mt-2">{edu.date}</p>
-                </div>
-              </div>
-              <p className="mt-4 text-gray-400 font-bold">Grade: {edu.grade}</p>
-              <p className="mt-4 text-gray-400">{edu.desc}</p>
-            </div>
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      {edu.date}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Typography variant="body2" color="text.secondary" mt={2} fontWeight={600}>
+                  Grade: {edu.grade}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" mt={1}>
+                  {edu.desc}
+                </Typography>
+              </Card>
+            </Box>
           </motion.div>
         ))}
-      </div>
-    </section>
+      </Box>
+    </Box>
   );
 };
 

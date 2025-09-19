@@ -1,175 +1,225 @@
 import React, { useState } from "react";
 import { projects } from "../../constants";
-import { motion } from "framer-motion";
-
-const containerVariants = {
-  hidden: {},
-  show: { 
-    transition: { staggerChildren: 0.2 }
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
-};
-
-const modalVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
-};
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  Chip,
+  Button,
+  Dialog,
+  DialogContent,
+  useTheme,
+} from "@mui/material";
 
 const Work = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   const handleOpenModal = (project) => setSelectedProject(project);
   const handleCloseModal = () => setSelectedProject(null);
 
   return (
-    <section
+    <Box
       id="work"
-      className="py-24 pb-24 px-[12vw] md:px-[7vw] lg:px-[20vw] font-sans relative"
+      sx={{
+        py: 10, // reduced from 12
+        px: { xs: 3, sm: 6, md: 10, lg: 20 },
+        position: "relative",
+      }}
     >
       {/* Section Title */}
-      <div className="text-center mb-16">
-        <motion.h2
-          className="text-4xl font-bold text-white"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-        >
-          PROJECTS
-        </motion.h2>
-        <motion.div
-          className="w-32 h-1 bg-purple-500 mx-auto mt-4"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-        ></motion.div>
-        <motion.p
-          className="text-gray-400 mt-4 text-lg font-semibold"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+      <Box textAlign="center" mb={4}> {/* reduced from 10 */}
+        <Typography variant="h4" fontWeight="bold" color="text.primary">
+          Projects
+        </Typography>
+        <Box
+          sx={{
+            width: 120,
+            height: 4,
+            bgcolor: "#8245ec",
+            mx: "auto",
+            mt: 2,
+            borderRadius: 2,
+          }}
+        />
+        <Typography
+          variant="subtitle1"
+          color="text.secondary"
+          fontWeight={600}
+          mt={2}
         >
           A showcase of the projects I have worked on, highlighting my skills
           and experience in various technologies
-        </motion.p>
-      </div>
+        </Typography>
+      </Box>
 
       {/* Projects Grid */}
-      <motion.div
-        className="grid gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
+      <Box
+        sx={{
+          display: "grid",
+          gap: { xs: 3, sm: 4 },
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          },
+        }}
       >
         {projects.map((project) => (
-          <motion.div
+          <Card
             key={project.id}
             onClick={() => handleOpenModal(project)}
-            className="border border-white bg-gray-900 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden cursor-pointer hover:shadow-purple-500/50 hover:-translate-y-2 transition-transform duration-300"
-            variants={cardVariants}
+            sx={{
+              cursor: "pointer",
+              borderRadius: 3,
+              overflow: "hidden",
+              boxShadow: 8,
+              bgcolor: isDark ? "#000000" : "#f3f0ff",
+              transition: "0.3s",
+              "&:hover": {
+                transform: "translateY(-5px)",
+                boxShadow: 12,
+              },
+            }}
           >
-            <div className="p-4">
+            <Box>
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-48 object-cover rounded-xl"
+                style={{
+                  width: "100%",
+                  height: "180px",
+                  objectFit: "cover",
+                }}
               />
-            </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-white mb-2">
-                {project.title}
-              </h3>
-              <p className="text-gray-500 mb-4 pt-4 line-clamp-3">
-                {project.description}
-              </p>
-              <div className="mb-4">
-                {project.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="inline-block bg-[#251f38] text-xs font-semibold text-purple-500 rounded-full px-2 py-1 mr-2 mb-2"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Modal Container */}
-      {selectedProject && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
-          variants={modalVariants}
-          initial="hidden"
-          animate="show"
-          exit="hidden"
-        >
-          <div className="bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl overflow-hidden relative">
-            {/* Close Button */}
-            <div className="absolute top-4 right-4 z-50">
-              <button
-                onClick={handleCloseModal}
-                className="text-white text-3xl font-bold hover:text-purple-500"
+            </Box>
+            <CardContent>
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                color="text.primary"
+                mb={1}
               >
-                &times;
-              </button>
-            </div>
+                {project.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+                mb={2}
+              >
+                {project.description}
+              </Typography>
+              <Box display="flex" flexWrap="wrap" gap={1}>
+                {project.tags.map((tag, idx) => (
+                  <Chip
+                    key={idx}
+                    label={tag}
+                    size="small"
+                    sx={{
+                      bgcolor: isDark ? "#251f38" : "rgba(130,69,236,0.1)",
+                      color: "#8245ec",
+                      fontWeight: 500,
+                    }}
+                  />
+                ))}
+              </Box>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
 
-            {/* Modal Content */}
-            <div className="flex flex-col items-center p-6 lg:p-8">
+      {/* Modal */}
+      <Dialog
+        open={Boolean(selectedProject)}
+        onClose={handleCloseModal}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            bgcolor: isDark ? "#1e1e1e" : "#fff",
+            borderRadius: 3,
+          },
+        }}
+      >
+        {selectedProject && (
+          <DialogContent sx={{ p: 3 }}>
+            <Box textAlign="center">
               <img
                 src={selectedProject.image}
                 alt={selectedProject.title}
-                className="w-full max-h-[400px] object-contain rounded-xl shadow-2xl mb-6"
+                style={{
+                  width: "100%",
+                  maxHeight: "320px",
+                  objectFit: "contain",
+                  borderRadius: "12px",
+                  marginBottom: "16px",
+                }}
               />
-              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4 text-center">
+              <Typography variant="h5" fontWeight="bold" mb={1}>
                 {selectedProject.title}
-              </h3>
-              <p className="text-gray-400 mb-6 text-center lg:text-base text-sm">
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                mb={2}
+                textAlign="center"
+              >
                 {selectedProject.description}
-              </p>
-              <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {selectedProject.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-[#251f38] text-xs font-semibold text-purple-500 rounded-full px-2 py-1"
-                  >
-                    {tag}
-                  </span>
+              </Typography>
+              <Box display="flex" flexWrap="wrap" justifyContent="center" gap={1} mb={3}>
+                {selectedProject.tags.map((tag, idx) => (
+                  <Chip
+                    key={idx}
+                    label={tag}
+                    size="small"
+                    sx={{
+                      bgcolor: isDark ? "#251f38" : "rgba(130,69,236,0.1)",
+                      color: "#8245ec",
+                      fontWeight: 500,
+                    }}
+                  />
                 ))}
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <a
+              </Box>
+              <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
+                <Button
                   href={selectedProject.github}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-gray-800 hover:bg-purple-800 text-gray-400 px-4 py-2 rounded-xl text-center font-semibold"
+                  fullWidth
+                  variant="outlined"
+                  sx={{
+                    borderColor: "#8245ec",
+                    color: "#8245ec",
+                    "&:hover": { backgroundColor: "#8245ec", color: "#fff" },
+                  }}
                 >
                   View Code
-                </a>
-                <a
+                </Button>
+                <Button
                   href={selectedProject.webapp}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-purple-600 hover:bg-purple-800 text-white px-4 py-2 rounded-xl text-center font-semibold"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#8245ec",
+                    "&:hover": { bgcolor: "#622dc1" },
+                  }}
                 >
                   View Live
-                </a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </section>
+                </Button>
+              </Box>
+            </Box>
+          </DialogContent>
+        )}
+      </Dialog>
+    </Box>
   );
 };
 

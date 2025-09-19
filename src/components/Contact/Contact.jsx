@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
+import { Box, Typography, TextField, Button, useTheme } from "@mui/material";
 
 const inputVariant = {
   hidden: { opacity: 0, y: 30 },
@@ -10,10 +11,11 @@ const inputVariant = {
 };
 
 const Contact = () => {
+  const theme = useTheme();
   const form = useRef();
   const [isSent, setIsSent] = useState(false);
 
-  const sentEmail = (e) => {
+  const sendEmail = (e) => {
     e.preventDefault();
     emailjs
       .sendForm(
@@ -29,102 +31,162 @@ const Contact = () => {
           toast.success("Message Sent Successfully!", {
             position: "top-right",
             autoClose: 3000,
-            theme: "dark",
+            theme: theme.palette.mode,
           });
         },
-        (error) => {
+        () => {
           toast.error("Failed to Send Message. Please Try Again", {
             position: "top-right",
             autoClose: 3000,
-            theme: "dark",
+            theme: theme.palette.mode,
           });
         }
       );
   };
 
+  // Dynamic colors for light/dark mode
+  const bgColor = theme.palette.mode === "dark" ? "#0d081f" : "#f9f9f9";
+  const inputBg = theme.palette.mode === "dark" ? "#131025" : "#fff";
+  const inputColor = theme.palette.mode === "dark" ? "white" : "black";
+  const inputLabelColor = theme.palette.mode === "dark" ? "gray" : "gray.700";
+  const textColor = theme.palette.mode === "dark" ? "white" : "text.primary";
+  const borderColor = theme.palette.mode === "dark" ? "#444" : "#ddd";
+
   return (
     <motion.section
       id="contact"
-      className="flex flex-col items-center justify-center py-24 px-[12vw] md:px-[7vw] lg:px-[20vw]"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
     >
       <ToastContainer />
+
       {/* Section Title */}
-      <motion.div
-        className="text-center mb-16"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <h2 className="text-4xl font-bold text-white">CONTACT</h2>
-        <div className="w-32 h-1 bg-purple-500 mx-auto mt-4"></div>
-        <p className="text-gray-400 mt-4 text-lg font-semibold">
-          I'd love to hear from you — reach out for any opportunities or
-          questions!
-        </p>
-      </motion.div>
+      <Box textAlign="center" py={10} px={{ xs: 3, md: 7, lg: 20 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <Typography variant="h4" fontWeight="bold" color={textColor}>
+            Contact
+          </Typography>
+          <Box
+            sx={{
+              width: 120,
+              height: 4,
+              bgcolor: "#8245ec",
+              mx: "auto",
+              mt: 2,
+              borderRadius: 2,
+            }}
+          />
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            fontWeight={600}
+            mt={2}
+          >
+            I'd love to hear from you — reach out for any opportunities or
+            questions!
+          </Typography>
+        </motion.div>
+      </Box>
 
       {/* Contact Form */}
-      <motion.div
-        className="mt-8 w-full max-w-md bg-[#0d081f] p-6 rounded-lg shadow-lg border border-gray-700"
+      <Box
+        component={motion.div}
+        mt={4}
+        px={2}
+        mx="auto"
+        maxWidth={500}
+        bgcolor={bgColor}
+        p={4}
+        borderRadius={3}
+        border={`1px solid ${borderColor}`}
+        boxShadow={6}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
         viewport={{ once: true, amount: 0.3 }}
       >
-        <h3 className="text-xl font-semibold text-white text-center">
+        <Typography
+          variant="h5"
+          fontWeight="600"
+          textAlign="center"
+          color={textColor}
+          mb={3}
+        >
           Connect With Me
-        </h3>
+        </Typography>
+
         <motion.form
           ref={form}
-          onSubmit={sentEmail}
-          className="mt-4 flex flex-col space-y-4"
+          onSubmit={sendEmail}
+          style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          variants={inputVariant}
         >
-          <motion.input
-            type="email"
-            name="user_email"
-            placeholder="Your Email"
-            required
-            className="w-full p-3 rounded-md bg-[#131025] text-white border border-gray-600 focus:outline-none focus:border-purple-500"
-            variants={inputVariant}
-          />
-          <motion.input
-            type="text"
-            name="user_name"
-            placeholder="Your Name"
-            required
-            className="w-full p-3 rounded-md bg-[#131025] text-white border border-gray-600 focus:outline-none focus:border-purple-500"
-            variants={inputVariant}
-          />
-          <motion.input
-            type="text"
-            name="subject"
-            placeholder="Subject"
-            required
-            className="w-full p-3 rounded-md bg-[#131025] text-white border border-gray-600 focus:outline-none focus:border-purple-500"
-            variants={inputVariant}
-          />
-          <motion.textarea
-            name="message"
-            placeholder="Message"
-            rows={4}
-            className="w-full p-3 rounded-md bg-[#131025] text-white border border-gray-600 focus:outline-none focus:border-purple-500"
-            variants={inputVariant}
-          ></motion.textarea>
+          {["user_email", "user_name", "subject"].map((field, idx) => (
+            <TextField
+              key={idx}
+              name={field}
+              label={
+                field === "user_email"
+                  ? "Your Email"
+                  : field === "user_name"
+                  ? "Your Name"
+                  : "Subject"
+              }
+              required
+              variant="filled"
+              InputProps={{
+                sx: {
+                  bgcolor: inputBg,
+                  color: inputColor,
+                  borderRadius: 1,
+                },
+              }}
+              InputLabelProps={{ sx: { color: inputLabelColor } }}
+              fullWidth
+            />
+          ))}
 
-          {/* Send Button */}
-          <motion.button
+          <TextField
+            name="message"
+            label="Message"
+            required
+            variant="filled"
+            multiline
+            rows={4}
+            InputProps={{
+              sx: {
+                bgcolor: inputBg,
+                color: inputColor,
+                borderRadius: 1,
+              },
+            }}
+            InputLabelProps={{ sx: { color: inputLabelColor } }}
+            fullWidth
+          />
+
+          <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-purple-600 to-pink-500 py-3 text-white font-semibold rounded-md"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            variants={inputVariant}
+            variant="contained"
+            sx={{
+              mt: 1,
+              backgroundImage: "linear-gradient(to right, #8245ec, #ff3cac)",
+              color: "white",
+              fontWeight: 600,
+              py: 1.5,
+              borderRadius: 2,
+              "&:hover": {
+                transform: "scale(1.05)",
+              },
+            }}
           >
             Send
-          </motion.button>
+          </Button>
         </motion.form>
-      </motion.div>
+      </Box>
     </motion.section>
   );
 };

@@ -1,94 +1,90 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
+import { Box, Typography, IconButton, Link, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 
 const Footer = () => {
-  const handleScroll = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const theme = useTheme();
 
   const iconVariant = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
+  const socialLinks = [
+    { icon: <FaFacebook />, link: "https://www.facebook.com/aakash.raktade.3/", color: "#1877F2" },
+    { icon: <FaTwitter />, link: "https://x.com/AakashRakt19386", color: "#1DA1F2" },
+    { icon: <FaLinkedin />, link: "https://www.linkedin.com/in/aakash-raktade-08877b26a/", color: "#0077B5" },
+    { icon: <FaInstagram />, link: "https://www.instagram.com/aakash_raktade/?hl=en", color: "#E1306C" },
+    { icon: <FaGithub />, link: "https://github.com/aakashraktade", color: "#181717" },
+  ];
+
   return (
-    <motion.footer
-      className="text-white py-8 px-[12vw] md:px-[7vw] lg:px-[20vw] bg-gray-900"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-    >
-      <motion.div
-        className="container mx-auto text-center"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+    <motion.footer initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
+      <Box
+        bgcolor={theme.palette.mode === "dark" ? "#0d081f" : "rgba(255,255,255,0.95)"}
+        color={theme.palette.mode === "dark" ? "grey.100" : "#111"}
+        py={1.5}
+        px={{ xs: 2, md: 4, lg: 8 }}
+        textAlign="center"
+        sx={{ backdropFilter: theme.palette.mode === "light" ? "blur(10px)" : "none" }}
       >
-        <h2 className="text-xl font-semibold text-purple-500">
+        {/* Name */}
+        <Typography variant="body2" fontWeight="bold" mb={0.5}>
           Aakash Raktade
-        </h2>
+        </Typography>
 
         {/* Contact Info */}
         <motion.div
-          className="mt-6 text-sm sm:text-base space-y-2"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8, staggerChildren: 0.2 } }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, staggerChildren: 0.1 } }}
+          style={{ marginBottom: 4 }}
         >
-          <p>
+          <Typography variant="caption" display="block">
             📞{" "}
-            <a href="tel:+919324336977" className="hover:text-purple-500 transition-colors">
+            <Link href="tel:+919324336977" underline="hover" color="inherit">
               +91 9324336977
-            </a>
-          </p>
-          <p>
+            </Link>
+          </Typography>
+          <Typography variant="caption" display="block">
             📧{" "}
-            <a href="mailto:aakashraktade06@gmail.com" className="hover:text-purple-500 transition-colors">
+            <Link href="mailto:aakashraktade06@gmail.com" underline="hover" color="inherit">
               aakashraktade06@gmail.com
-            </a>
-          </p>
+            </Link>
+          </Typography>
         </motion.div>
 
-        {/* Social Media */}
-        <motion.div
-          className="flex flex-wrap justify-center space-x-4 mt-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          {[
-            { icon: <FaFacebook />, link: "https://www.facebook.com/aakash.raktade.3/" },
-            { icon: <FaTwitter />, link: "https://x.com/AakashRakt19386" },
-            { icon: <FaLinkedin />, link: "https://www.linkedin.com/in/aakash-raktade-08877b26a/" },
-            { icon: <FaInstagram />, link: "https://www.instagram.com/aakash_raktade/?hl=en" },
-            { icon: <FaGithub />, link: "https://github.com/aakashraktade" },
-          ].map((item, index) => (
-            <motion.a
-              href={item.link}
+        {/* Social Icons */}
+        <Box display="flex" justifyContent="center" mt={0.5} gap={1}>
+          {socialLinks.map((item, index) => (
+            <motion.div
               key={index}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-2xl sm:text-xl text-white"
               variants={iconVariant}
-              whileHover={{ scale: 1.2, color: "#8245ec" }}
+              whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
             >
-              {item.icon}
-            </motion.a>
+              <IconButton
+                component="a"
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: theme.palette.mode === "light" ? item.color : "#fff",
+                  p: 0.3,
+                  fontSize: "small",
+                }}
+              >
+                {item.icon}
+              </IconButton>
+            </motion.div>
           ))}
-        </motion.div>
+        </Box>
 
         {/* Copyright */}
-        <motion.p
-          className="mt-6 text-xs text-gray-400"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
-        >
+        <Typography variant="caption" display="block" mt={1} color={theme.palette.mode === "dark" ? "grey.400" : "grey.600"}>
           © {new Date().getFullYear()} Aakash Raktade.
-        </motion.p>
-      </motion.div>
+        </Typography>
+      </Box>
     </motion.footer>
   );
 };
